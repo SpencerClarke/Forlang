@@ -1,0 +1,29 @@
+program operators
+	
+	character (len=128)::sa="hello ", sb="world ", sc
+	integer::ia=2, ib, ic
+	real::ra=0.5, rb, rc
+	
+	print *, "ra =", ra, ", ia =", ia
+	print *, "ra + ia = ", ra + ia
+	print *, "ia + ra = ", ra + ia
+	print *, "ra - ia = ", ra - ia
+	print *, "ia - ra = ", ia - ra
+	print *, "ra * ia = ", ra * ia
+	print *, "ia * ra = ", ia * ra
+	print *, "ra / ia = ", ra / ia
+	print *, "ia / ra = ", ia / ra
+	print *, "ra ** ia = ", ra ** ia
+	print *, "ia ** ra = ", ia ** ra
+	print *, "ia ** ia = ", ia ** ia
+	print *, "ra ** ra = ", ra ** ra
+	print *, ""
+	print *, "sa =", sa,", sb =", sb
+	print *, "sa // sb =", sa // sb
+	print *, "sb // sa =", sb // sa
+	print *, "sa // ra =", sa // ra
+	print *, "ra // sa =", ra // sa
+	print *, "sa // ia =", sa // ia
+	print *, "ia // sa =", ia // sa
+
+end program operators

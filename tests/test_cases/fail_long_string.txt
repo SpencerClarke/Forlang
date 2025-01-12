@@ -1,0 +1,8 @@
+PROGRAM circle
+	!Variable declarations and simple if statement
+
+	character (len = 4) :: str1
+
+	str1 = "abcde"
+	
+END PROGRAM circle

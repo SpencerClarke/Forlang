@@ -1,0 +1,16 @@
+program unary_ops
+	integer::a
+	real::b
+
+	a = 1
+	b = 2
+	print *, +a
+	print *, -a
+	print *, a + + a
+	print *, a + - (-a)
+	print *, +b
+	print *, -b
+	print *, b + + a
+	print *, a + - (-b)
+
+end program unary_ops

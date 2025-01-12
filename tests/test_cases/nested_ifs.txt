@@ -1,0 +1,20 @@
+program nested_ifs
+
+	character (len=128)::a, b, c="asdf"
+	if (c == "asdf") print *, "c =" , c
+	b = "asdf"
+	if (c == b)
+		if (1 == 1) then
+			print *,("BANG!")
+		else
+			print *,("BOOM!")
+		end if
+
+	if (c == b) then
+		if (1 == 1)
+			print *,("CLANG!")
+	end if
+
+	print *,("Done.")
+
+end program nested_ifs

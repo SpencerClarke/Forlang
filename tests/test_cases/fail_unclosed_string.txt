@@ -1,0 +1,49 @@
+program comparisons
+
+	real::r1 = 0.5, r2=0.25
+	integer::i1=0, i2=1
+	character (len=128)::s="cat"
+
+	print *, "r1:", r1
+	print *, "r2:", r2
+	print *, "i1:", i1
+	print *, "i2:", i2
+	print *, "s:", s
+
+	if(r1 > r2) then
+		print *, "r1 > r2"
+	end if
+
+	if(r2 > r1) then
+		print *, "r2 > r1"
+	end if
+
+	if(r1 < r2) then
+		print *, "r1 < r2"
+	end if
+
+	if(r2 < r1) then
+		print *, "r2 < r1"
+	end if
+
+
+	if(i1 > r2) then
+		print *, "i1 > r2"
+	end if
+
+	if(r2 > i1) then
+		print *, "r2 > i1"
+	end if
+
+	if(i1 < r2) then
+		print *, "i1 < r2"
+	end if
+
+	if(r2 < i1) then
+		print *, "i2 < i1"
+	end if
+
+	if(s == "cat") print *, 's == "cat"'
+	if(s == "dog") print *, 's == "dog"
+
+end program comparisons

@@ -1,0 +1,14 @@
+program implicit_conversion
+	integer::a
+	real::b
+	character(len=256)::c
+
+	a=5.5
+	print *, A
+	b = 4
+	print *, b
+	c = a
+	print *, c
+	c = b
+	print *, c
+end program implicit_conversion

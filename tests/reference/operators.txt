@@ -1,0 +1,21 @@
+ra = 0.5000 , ia = 2
+ra + ia =  2.5000
+ia + ra =  2.5000
+ra - ia =  -1.5000
+ia - ra =  1.5000
+ra * ia =  1.0000
+ia * ra =  1.0000
+ra / ia =  0.2500
+ia / ra =  4.0000
+ra ** ia =  0.2500
+ia ** ra =  1.4142
+ia ** ia =  4
+ra ** ra =  0.7071
+
+sa = hello  , sb = world 
+sa // sb = hello world 
+sb // sa = world hello 
+sa // ra = hello 0.5000
+ra // sa = 0.5000hello 
+sa // ia = hello 2
+ia // sa = 2hello 

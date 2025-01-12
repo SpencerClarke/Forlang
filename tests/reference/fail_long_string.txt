@@ -1,0 +1,1 @@
+String 'abcde' too large for variable 'STR1' with maximum string length 4

@@ -1,0 +1,10 @@
+program expression_initializers
+
+	integer::a=5
+	integer::b=5+5
+	real::c=b-5
+	character (len=128)::d=5//c
+
+	print *, a, b, c, d
+
+end program expression_initializers

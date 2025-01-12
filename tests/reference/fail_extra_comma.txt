@@ -1,0 +1,2 @@
+parser: error on line 9: syntax error
+main: parser failure

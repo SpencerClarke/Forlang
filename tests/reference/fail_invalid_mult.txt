@@ -1,0 +1,1 @@
+interpreter: invalid operand '1hi' for * or / operator

@@ -1,0 +1,2 @@
+String '44.5550' too large for variable 'A' with maximum string length 6
+4.4555

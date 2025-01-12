@@ -1,0 +1,51 @@
+program test
+	real	::	a,	 	b=1.2
+	integer	::	c=3, 	d
+	character (len=128)	::	s_1, 	s_2="Hello"
+
+	a = c+b
+	print *, c // "+" // b // "=" // a
+	print *, 1, 2, 3
+	d = c*2
+
+	!This will still work because the parentheses make it match (expr)
+	!You wouldn't be able to put commas in the parentheses though.
+	print *,(c // "*2=" // d)
+
+	a = c+d
+	print *, c // "+" // d // "=" // a
+
+	d = d**2
+	print *, d
+
+	print *, s_2
+	s_1 = " world"
+	print *, s_2 // s_1 // " " // c**2
+
+	if (1 == 2) then
+		print *, "a"
+		if(1 == 1) then
+			print *, "x"
+		else
+			print *, "y"
+		end if
+		
+		if(5.6 < 7.6) print *, "cats"
+	else
+		print *, "b"
+		if(1 == 1) then
+			print *,("c")
+			if("a" == "a") then
+				print *, "q"
+			else
+				print *, "r"
+			end if
+
+			if(5.6 < 7.6) d = -((4 * 3 / 2) ** c / 6 + 4)
+			if(5.6 > 7.6) d = -345
+			print *, "value:", d
+		else
+			print *, "d"
+		end if
+	end if
+end program test

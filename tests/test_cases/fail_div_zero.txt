@@ -1,0 +1,3 @@
+program divzero
+	integer :: a = 4/0
+end program divzero

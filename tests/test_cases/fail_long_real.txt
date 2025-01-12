@@ -1,0 +1,10 @@
+program long_real
+character(len=6)::a
+real::b
+
+b = 4.4555
+A = b
+print *, a
+a = b * 10
+
+end program long_real

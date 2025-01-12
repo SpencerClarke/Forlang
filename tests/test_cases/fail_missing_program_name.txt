@@ -1,0 +1,9 @@
+program expression_initializers
+
+	real::a=(3**3), b=(3.0**3)
+	integer::c=3+0.5*(2-3), d=4+4*2
+	character (len=128)::e=4//'c'
+
+	print *, a, b, c, d, e
+
+end program
