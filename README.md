@@ -1,6 +1,6 @@
 # Project Overview
 
-This is an implementation of an interpreter for a small subset of a Fortran-like programming language that I wrote last semester as a school project and am saving here. It includes a lexer written in Flex, a parser written in Bison which generates an AST, and an interpreter and symbol table written in pure C. It includes if statements, print statements, and variable declaration and assignment.
+This is an implementation of an interpreter for a small subset of a Fortran-like programming language that I wrote last semester as a school project and am saving here. It includes a lexer written in Flex, a parser written in Bison which generates an AST, and an interpreter and symbol table written in pure C. It includes if statements, print statements, loops, and variable declaration and assignment.
 # Build instructions
 
 To create the executable, simply use the Makefile on a machine that has make, gcc, bison, and flex installed.
