@@ -4,9 +4,9 @@
 
 CC := gcc
 CFLAGS := -I./include -I./build -Wall -Wextra -Wpedantic -g
-LDFLAGS := -ll -lm
+LDFLAGS := -lfl -lm
 
-bin/toylang: build/interpreter.o build/ast.o build/symbol_table.o build/lex.o build/parser.o build/parser.tab.h
+bin/toylang: src/main.c build/interpreter.o build/ast.o build/symbol_table.o build/lex.o build/parser.o build/parser.tab.h
 	$(CC) $(CFLAGS) -o bin/toylang build/symbol_table.o build/ast.o build/parser.o build/lex.o build/interpreter.o src/main.c $(LDFLAGS)
 
 build/lex.o: build/lex.yy.c build/parser.tab.h 
@@ -25,7 +25,7 @@ build/symbol_table.o: src/symbol_table.c include/symbol_table.h
 	$(CC) $(CFLAGS) -c src/symbol_table.c -o build/symbol_table.o
 
 build/parser.tab.c build/parser.tab.h: src/parser.y src/lex.l
-	bison -Wcounterexamples --header="build/parser.tab.h" -o build/parser.tab.c src/parser.y
+	bison -Wcounterexamples -d -o build/parser.tab.c src/parser.y
 
 build/lex.yy.c: src/parser.y src/lex.l
 	flex -o build/lex.yy.c src/lex.l

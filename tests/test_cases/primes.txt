@@ -1,0 +1,20 @@
+program primes
+	integer::a,b,flag
+	a=1
+	do while(a < 100)
+		flag = 0
+		b = 2
+		do while(b < a)
+			if ((a / b) * b == a)
+			then
+				flag = 1
+			end if
+			b = b + 1
+		end do
+		if (flag == 0)
+		then
+			print *, a
+		end if
+		a = a + 1
+	end do
+end program primes

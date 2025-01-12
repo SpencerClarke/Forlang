@@ -69,12 +69,14 @@ struct Statement_Block_Node
 
 enum Statement_Node_Type
 {
+	STATEMENT_TYPE_DO_WHILE_LOOP,
 	STATEMENT_TYPE_BLOCK_IF_STATEMENT,
 	STATEMENT_TYPE_SIMPLE_IF_STATEMENT,
 	STATEMENT_TYPE_SIMPLE_STATEMENT
 };
 union Statement_Node_Data
 {
+	struct Do_While_Loop_Node *do_while_loop;
 	struct Block_If_Statement_Node *block_if_statement;
 	struct Simple_If_Statement_Node *simple_if_statement;
 	struct Simple_Statement_Node *simple_statement;
@@ -85,6 +87,11 @@ struct Statement_Node
 	union Statement_Node_Data statement;
 };
 
+struct Do_While_Loop_Node
+{
+	struct Logical_Expression_Node *logical_expression;
+	struct Statement_Block_Node *statement_block;
+};
 struct Block_If_Statement_Node
 {
 	struct Logical_Expression_Node *logical_expression;
@@ -192,6 +199,9 @@ struct Factor_Node
 	struct Expression_Node *expression;
 };
 
+/* This API is used by the bison file to construct the AST.
+ * A typical semantic action in the bison file creates one of these nodes using an init function 
+ */
 struct Factor_Node *factor_node_init(struct Symbol symbol, struct Expression_Node *expression);
 struct S_Factor_Node *s_factor_node_init(enum S_Factor_Operator op, struct Factor_Node *factor);
 struct Term_Expression_Node *term_expression_node_init(struct S_Factor_Node *s_factor, struct Term_Expression_Node *exponent);
@@ -204,6 +214,7 @@ struct Assignment_Statement_Node *assignment_statement_node_init(struct Symbol i
 struct Simple_Statement_Node *simple_statement_node_init(enum Simple_Statement_Node_Type type, void *statement);
 struct Simple_If_Statement_Node *simple_if_statement_node_init(struct Logical_Expression_Node *logical_expression, struct Statement_Node *statement);
 struct Block_If_Statement_Node *block_if_statement_init(struct Logical_Expression_Node *logical_expression, struct Statement_Block_Node *statement_block, struct Statement_Block_Node *else_statement_block);
+struct Do_While_Loop_Node *do_while_loop_node_init(struct Logical_Expression_Node *logical_expression, struct Statement_Block_Node *statement_block);
 struct Statement_Node *statement_node_init(enum Statement_Node_Type type, void *statement);
 struct Statement_Block_Node *statement_block_node_init(struct Statement_Node *statement, struct Statement_Block_Node *statement_block);
 struct Variable_Declaration_Node *variable_declaration_node_init(struct Symbol variable_ident, struct Expression_Node *expression);

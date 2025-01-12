@@ -1,14 +1,5 @@
 #include "interpreter.h" 
 
-
-#define MAX_STRING_LENGTH (INT_MAX/2 + 1)
-/* This limit is very important.
- * Every string ever will be limited to INT_MAX/2 + 1 characters.
- * This means the largest string production tried with snprintf will span INT_MAX - 1 characters (INT_MAX is odd)
- * The return value of snprintf for any string greater than this limit is undefined.
- */
-
-
 static void *_malloc(size_t n);
 static int ipow(int a, int b);
 static void exec_declaration_block(struct Declaration_Block_Node *declaration_block, struct Symbol_Table *symbol_table);
@@ -16,6 +7,7 @@ static void exec_variable_declaration_list(struct Variable_Declaration_List_Node
 static void exec_variable_declaration(struct Variable_Declaration_Node *variable_declaration, enum Expression_Type variable_type, size_t strlen_max, struct Symbol_Table *symbol_table);
 static void exec_statement_block(struct Statement_Block_Node *statement_block, struct Symbol_Table *symbol_table);
 static void exec_statement(struct Statement_Node *statement, struct Symbol_Table *symbol_table);
+static void exec_do_while_loop(struct Do_While_Loop_Node *do_while_loop, struct Symbol_Table *symbol_table);
 static void exec_block_if_statement(struct Block_If_Statement_Node *block_if_statement, struct Symbol_Table *symbol_table);
 static void exec_simple_if_statement(struct Simple_If_Statement_Node *simple_if_statement, struct Symbol_Table *symbol_table);
 static void exec_assignment_statement(struct Assignment_Statement_Node *assignment_statement, struct Symbol_Table *symbol_table);
@@ -144,6 +136,14 @@ static void exec_variable_declaration(struct Variable_Declaration_Node *variable
 
 	symbol_table_insert_new(symbol_table, variable_declaration->variable_ident.value.string, new_record, variable_type, strlen_max);
 }
+
+static void exec_do_while_loop(struct Do_While_Loop_Node *do_while_loop, struct Symbol_Table *symbol_table)
+{
+	while(eval_logical_expression(do_while_loop->logical_expression, symbol_table))
+	{
+		exec_statement_block(do_while_loop->statement_block, symbol_table);
+	}
+}
 static void exec_statement_block(struct Statement_Block_Node *statement_block, struct Symbol_Table *symbol_table)
 {
 	while(statement_block != NULL)
@@ -174,6 +174,10 @@ static void exec_statement(struct Statement_Node *statement, struct Symbol_Table
 				{
 					exec_print_statement(statement->statement.simple_statement->statement.print_statement, symbol_table);
 				}
+				break;
+
+			case STATEMENT_TYPE_DO_WHILE_LOOP:
+				exec_do_while_loop(statement->statement.do_while_loop, symbol_table);
 				break;
 		}
 }
@@ -239,36 +243,9 @@ static void exec_print_statement(struct Print_Statement_Node *print_statement, s
 
 static int eval_logical_expression(struct Logical_Expression_Node *expression, struct Symbol_Table *symbol_table)
 {
-	int out = 0;
 	struct Expression_Record expr1_record = eval_expression(expression->first_expression, symbol_table);
-
-	if(expression->second_expression == NULL)
-	{
-		switch(expr1_record.type)
-		{
-			case EXPRESSION_TYPE_INTEGER:
-				if(expr1_record.data.integer != 0)
-				{
-					out = 1;
-				}
-				break;
-			case EXPRESSION_TYPE_REAL:
-				if(expr1_record.data.real != 0.0)
-				{
-					out = 1;
-				}
-				break;
-			case EXPRESSION_TYPE_STRING:
-				if(expr1_record.data.string[0] != '\0')
-				{
-					out = 1;
-				}
-				break;
-		}
-		return out;
-	}
-	
 	struct Expression_Record expr2_record = eval_expression(expression->second_expression, symbol_table);
+	int out = 0;
 	switch(expr1_record.type)
 	{
 		case EXPRESSION_TYPE_INTEGER:
@@ -577,12 +554,6 @@ static struct Expression_Record eval_expression(struct Expression_Node *expressi
 			}
 			break;
 	}	
-
-	if(out.type == EXPRESSION_TYPE_STRING && strlen(out.data.string) > MAX_STRING_LENGTH)
-	{
-		fprintf(stderr, "String value '%s' exceeds maximum string length of %d\n", out.data.string, MAX_STRING_LENGTH);
-		exit(3);
-	}
 	return out;
 }
 static struct Expression_Record eval_mult_expression(struct Mult_Expression_Node *mult_expression, struct Symbol_Table *symbol_table)
@@ -828,12 +799,5 @@ static struct Expression_Record eval_factor(struct Factor_Node *factor, struct S
 			}
 			return out_record;
 	}
-	
-	if(out_record.type == EXPRESSION_TYPE_STRING && strlen(out_record.data.string) > MAX_STRING_LENGTH)
-	{
-		fprintf(stderr, "String value '%s' exceeds maximum string length of %d\n", out_record.data.string, MAX_STRING_LENGTH);
-		exit(3);
-	}
-
 	return out_record;
 }

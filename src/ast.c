@@ -14,6 +14,7 @@ static void assignment_statement_node_destroy(struct Assignment_Statement_Node *
 static void simple_statement_node_destroy(struct Simple_Statement_Node *simple_statement_node);
 static void simple_if_statement_node_destroy(struct Simple_If_Statement_Node *simple_if_statement_node);
 static void block_if_statement_node_destroy(struct Block_If_Statement_Node *block_if_statement_node);
+static void do_while_loop_node_destroy(struct Do_While_Loop_Node *do_while_loop);
 static void statement_node_destroy(struct Statement_Node *statement_node);
 static void statement_block_node_destroy(struct Statement_Block_Node *statement_block_node);
 static void variable_declaration_node_destroy(struct Variable_Declaration_Node *variable_declaration_node);
@@ -234,6 +235,15 @@ struct Block_If_Statement_Node *block_if_statement_init(struct Logical_Expressio
 	return out;
 }
 
+struct Do_While_Loop_Node *do_while_loop_node_init(struct Logical_Expression_Node *logical_expression, struct Statement_Block_Node *statement_block)
+{
+	struct Do_While_Loop_Node *out = _malloc(Do_While_Loop_Node);
+
+	out->logical_expression = logical_expression;
+	out->statement_block = statement_block;
+
+	return out;
+}
 struct Statement_Node *statement_node_init(enum Statement_Node_Type type, void *statement)
 {
 	struct Statement_Node *out = _malloc(Statement_Node);
@@ -252,7 +262,11 @@ struct Statement_Node *statement_node_init(enum Statement_Node_Type type, void *
 		case STATEMENT_TYPE_SIMPLE_STATEMENT:
 			out->statement.simple_statement = statement;
 			break;
-	}		
+
+		case STATEMENT_TYPE_DO_WHILE_LOOP:
+			out->statement.do_while_loop = statement;
+			break;
+	}
 
 	return out;
 }
@@ -455,7 +469,15 @@ static void block_if_statement_node_destroy(struct Block_If_Statement_Node *bloc
 
 	free(block_if_statement_node);
 }
-
+static void do_while_loop_node_destroy(struct Do_While_Loop_Node *do_while_loop)
+{
+	if(do_while_loop == NULL)
+		return;
+	logical_expression_node_destroy(do_while_loop->logical_expression);
+	statement_block_node_destroy(do_while_loop->statement_block);
+	
+	free(do_while_loop);
+}
 static void statement_node_destroy(struct Statement_Node *statement_node)
 {
 	if(statement_node == NULL)
@@ -473,6 +495,10 @@ static void statement_node_destroy(struct Statement_Node *statement_node)
 
 		case STATEMENT_TYPE_SIMPLE_STATEMENT:
 			simple_statement_node_destroy(statement_node->statement.simple_statement);
+			break;
+
+		case STATEMENT_TYPE_DO_WHILE_LOOP:
+			do_while_loop_node_destroy(statement_node->statement.do_while_loop);
 			break;
 	}
 

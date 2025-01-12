@@ -1,0 +1,16 @@
+program test
+	integer::current, prior, temp, i
+
+	prior = 0
+	current = 1
+	i=0
+	do while(i < 15)
+		print *, prior
+
+		temp = prior + current
+		prior = current
+		current = temp
+
+		i = i + 1
+	end do
+end program test

@@ -1,10 +1,19 @@
 %{
 	#include "parser.tab.h"
 	#include <string.h>
-	#include <limits.h>
 	#include <stddef.h>
 
-	void strtoupr(char *s);
+	void strtoupr(char *s)
+	{
+		while(*s != '\0')
+		{
+			if(*s >= 'a' && *s <= 'z')
+			{
+				*s = *s - 'a' + 'A';
+			}
+			s++;
+		}
+	}
 %}
 
 %option yylineno
@@ -117,7 +126,12 @@ len {
 then {
 	return THEN;
 }
-
+do {
+	return DO;
+}
+while {
+	return WHILE;
+}
 \+ {
 	return PLUS;
 }
@@ -172,6 +186,10 @@ then {
     return DCOLON;
 }
 
+\?  {
+    return DEF;
+}
+
 {IDENT} {
 	yylval.strval = malloc(strlen(yytext) + 1);
 	if(yylval.strval == NULL)
@@ -194,15 +212,3 @@ then {
 	exit(2);
 }
 %%
-
-void strtoupr(char *s)
-{
-	while(*s != '\0')
-	{
-		if(*s >= 'a' && *s <= 'z')
-		{
-			*s = *s - 'a' + 'A';
-		}
-		s++;
-	}
-}

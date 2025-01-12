@@ -44,6 +44,9 @@ struct Symbol_Table
 	struct Symbol_Table_Node *root;
 };
 
+/* This API provides a mapping between variable names and their assigned values.
+ * It is implemented as a bitwise prefix tree. https://en.wikipedia.org/wiki/Trie#Bitwise_tries
+ */
 struct Symbol_Table symbol_table_init(void);
 void symbol_table_update(struct Symbol_Table *table, const char *ident, struct Expression_Record record);
 void symbol_table_insert_new(struct Symbol_Table *table, const char *ident, struct Expression_Record record, enum Expression_Type type, size_t strlen_max);

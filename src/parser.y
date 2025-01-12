@@ -10,7 +10,7 @@
 	/*So, it will have to take in void ** and then cast it to Program_Body_Node ** */
 	void yyerror(void **root, const char *s);
 
-	extern int yylex();
+	int yylex();
 %}
 
 %code requires{
@@ -32,6 +32,7 @@
 	struct Variable_Declaration_List_Node *variable_declaration_list_node;
 	struct Statement_Block_Node *statement_block_node;
 	struct Statement_Node *statement_node;
+	struct Do_While_Loop_Node *do_while_loop_node;
 	struct Block_If_Statement_Node *block_if_statement_node;
 	struct Simple_If_Statement_Node *simple_if_statement_node;
 	struct Simple_Statement_Node *simple_statement_node;
@@ -51,7 +52,7 @@
 %token <strval> IDENT
 %token <dval> RCONST
 %token <strval> SCONST
-%token NEWLINE PROGRAM END ELSE IF CHARACTER THEN INTEGER REAL PRINT LEN PLUS MINUS MULT DIV POW ASSOP EQ LTHAN GTHAN CAT COMMA LPAREN RPAREN DCOLON DOT
+%token DO WHILE NEWLINE PROGRAM END ELSE IF CHARACTER THEN INTEGER REAL PRINT LEN PLUS MINUS MULT DIV POW ASSOP EQ LTHAN GTHAN CAT COMMA LPAREN RPAREN DCOLON DOT DEF
 
 %type <program_body_node> program
 %type <program_body_node> program_body
@@ -62,6 +63,7 @@
 %type <variable_declaration_node> variable_declaration
 %type <statement_block_node> statement_block
 %type <statement_node> statement
+%type <do_while_loop_node> do_while_loop
 %type <block_if_statement_node> block_if_statement
 %type <simple_if_statement_node> simple_if_statement
 %type <simple_statement_node> simple_statement
@@ -170,6 +172,15 @@ statement:
 	}
 	| simple_statement {
 		$$ = statement_node_init(STATEMENT_TYPE_SIMPLE_STATEMENT, $1);
+	}
+	| do_while_loop {
+		$$ = statement_node_init(STATEMENT_TYPE_DO_WHILE_LOOP, $1);
+	}
+	;
+
+do_while_loop:
+	DO WHILE LPAREN logical_expression RPAREN statement_block END DO {
+		$$ = do_while_loop_node_init($4, $6);
 	}
 	;
 
