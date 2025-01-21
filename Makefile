@@ -6,8 +6,8 @@ CC := gcc
 CFLAGS := -I./include -I./build -Wall -Wextra -Wpedantic -g
 LDFLAGS := -lfl -lm
 
-bin/toylang: src/main.c build/interpreter.o build/ast.o build/symbol_table.o build/lex.o build/parser.o build/parser.tab.h
-	$(CC) $(CFLAGS) -o bin/toylang build/symbol_table.o build/ast.o build/parser.o build/lex.o build/interpreter.o src/main.c $(LDFLAGS)
+bin/forlang: src/main.c build/interpreter.o build/ast.o build/symbol_table.o build/lex.o build/parser.o build/parser.tab.h
+	$(CC) $(CFLAGS) -o bin/forlang build/symbol_table.o build/ast.o build/parser.o build/lex.o build/interpreter.o src/main.c $(LDFLAGS)
 
 build/lex.o: build/lex.yy.c build/parser.tab.h 
 	$(CC) $(CFLAGS) -c build/lex.yy.c -o build/lex.o

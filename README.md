@@ -16,9 +16,9 @@ make clean #Removes the executable as well as all build artifacts
 make #Builds the executable as ./bin/toylang
 ```
 
-The generated executable created as `./bin/toylang` reads the program directly through stdin, so in order to run a program stored as a file it is necessary to use input redirection (e.g. `./bin/toylang < ./tests/test_cases/program.txt`)
+The generated executable created as `./bin/forlang` reads the program directly through stdin, so in order to run a program stored as a file it is necessary to use input redirection (e.g. `./bin/toylang < ./tests/test_cases/program.txt`)
 
-The Makefile can also be used to execute the test cases I've created. (I threw the professor's test cases in there as well).
+The Makefile can also be used to execute the test cases I've created.
 ```bash
 make run-tests #Prints the output of the test case
 make run-tests-compare-files #Compares the test case output with expected output
