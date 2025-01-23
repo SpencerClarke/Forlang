@@ -14,7 +14,7 @@ for f in $DIR/tests/test_cases/*
 do
 	if [ $compare_files -ne 0 ]
 	then
-		$DIR/bin/toylang < $f 2>&1 | diff - tests/reference/$(basename $f)
+		$DIR/bin/forlang < $f 2>&1 | diff - tests/reference/$(basename $f)
 		result=$?
 		if [ $result -ne 0 ]
 		then
@@ -24,7 +24,7 @@ do
 		fi	
 	else
 		echo "------BEGIN $f OUTPUT------"
-		$DIR/bin/toylang < $f
+		$DIR/bin/forlang < $f
 		echo "------END $f OUTPUT------"
 	fi
 done

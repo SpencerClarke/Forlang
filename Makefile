@@ -31,11 +31,11 @@ build/lex.yy.c: src/parser.y src/lex.l
 	flex -o build/lex.yy.c src/lex.l
 
 clean:
-	rm -f bin/toylang 
+	rm -f bin/forlang 
 	rm -f build/*
 
 run-tests: bin/toylang
 	./run_tests.sh
 
-run-tests-compare-files: bin/toylang
+run-tests-compare-files: bin/forlang
 	./run_tests.sh --compare-files
