@@ -34,7 +34,7 @@ clean:
 	rm -f bin/forlang 
 	rm -f build/*
 
-run-tests: bin/toylang
+run-tests: bin/forlang
 	./run_tests.sh
 
 run-tests-compare-files: bin/forlang
